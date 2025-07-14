@@ -1,54 +1,82 @@
-##******** Hotel Management System ********##
+##******  Hotel Management System  ******##
 
-The Hotel Management System is a simple console-based application developed using Core Java, JDBC, and PostgreSQL. It is designed for Admin use only to manage hotel room bookings.  
-Admins can book AC/Non-AC rooms, view customer bookings, and check room availability summaries.  
+The Hotel Management System is a console-based Java application built using Core Java, Hibernate JPA, and PostgreSQL. It allows hotel administrators to book rooms, view all bookings, and check room availability in real-time. The system supports AC and Non-AC rooms, and ensures clean data handling using JPA and multithreaded-friendly structure.
 
 ---
 
 # Features
-
-- Book multiple rooms (AC or Non-AC) for customers
+- Book AC or Non-AC rooms
 - View all customer bookings
-- View room availability summary
-- Simple and menu-driven console UI
-- Works with PostgreSQL database using JDBC
+- Check live room availability summary
+- Hibernate JPA integration with PostgreSQL
+- Input validation and meaningful console feedback
+- Clean structure with Entity, Utility, and Main classes
+- Maven-based build system
 
 ---
 
-# Technologies Used
-
-- **Java 17 or 17+**
+# Technologies Used 
+- **Java 17+**
 - **PostgreSQL 15+**
-- **JDBC 4.2**
+- **Hibernate ORM 7.0.5.Final**
+- **Jakarta Persistence 3.2.0**
 - **Apache Maven 3.8.6+**
 
 ---
 
-# Maven Dependency
+# Maven Dependency 
 
 Add the following to your `pom.xml`:
 
 ```xml
-<dependency>
-    <groupId>org.postgresql</groupId>
-    <artifactId>postgresql</artifactId>
-    <version>42.7.7</version>
-</dependency>
+<dependencies>
+    <dependency>
+        <groupId>org.hibernate.orm</groupId>
+        <artifactId>hibernate-core</artifactId>
+        <version>7.0.5.Final</version>
+    </dependency>
+    <dependency>
+        <groupId>jakarta.persistence</groupId>
+        <artifactId>jakarta.persistence-api</artifactId>
+        <version>3.2.0</version>
+    </dependency>
+    <dependency>
+        <groupId>org.postgresql</groupId>
+        <artifactId>postgresql</artifactId>
+        <version>42.7.7</version>
+    </dependency>
+</dependencies>
+
 ```
 
 ---
 
-# Prerequisites
+#  JPA Configuration (persistence.xml) 
+- Location: src/main/resources/META-INF/persistence.xml
 
-- **Make sure the following are installed on your system:**
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence xmlns="https://jakarta.ee/xml/ns/persistence" version="3.0">
+  <persistence-unit name="hotel-unit" transaction-type="RESOURCE_LOCAL">
+    <class>com.venkatesh.entity.Room</class>
+    <class>com.venkatesh.entity.Customer</class>
+    <properties>
+      <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/hotel"/>
+      <property name="jakarta.persistence.jdbc.user" value="postgres"/>
+      <property name="jakarta.persistence.jdbc.password" value="yourpassword"/>
+      <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"/>
+      <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
+      <property name="hibernate.hbm2ddl.auto" value="update"/>
+      <property name="hibernate.show_sql" value="false"/>
+    </properties>
+  </persistence-unit>
+</persistence>
 
-- **Java JDK 17 or newer**
-- **pache Maven 3.8.6 or newer**
-- **PostgreSQL 15 or newer**
+```
 
 ---
 
-# Database Setup
+# Database Setup 
 ```sql
 
  **Step 1: Create a Database**
@@ -57,18 +85,18 @@ Add the following to your `pom.xml`:
 
  **Step 2: Create Tables**
 
- 1 . CREATE TABLE rooms (
-    room_number INT PRIMARY KEY,
-    room_type VARCHAR(10) NOT NULL CHECK (room_type IN ('AC', 'NON-AC')),
-    is_booked BOOLEAN DEFAULT FALSE
+CREATE TABLE rooms (
+  room_number INTEGER PRIMARY KEY,
+  room_type VARCHAR(10),
+  is_booked BOOLEAN
 );
 
- 2 .  CREATE TABLE customers (
-    id SERIAL PRIMARY KEY,
-    name VARCHAR(100) NOT NULL,
-    contact VARCHAR(20) NOT NULL,
-    room_number INT REFERENCES rooms(room_number),
-    room_type VARCHAR(10) NOT NULL
+CREATE TABLE customers (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(100),
+  contact VARCHAR(20),
+  room_number INTEGER,
+  room_type VARCHAR(10)
 );
 
  **Step 3: Insert Rooms (50 AC and 50 Non-AC)**
@@ -85,25 +113,33 @@ SELECT generate_series(51, 100), 'NON-AC';
 
 --- 
 
-# Project Structure
+# Project Structure 
 
 ```bash
 com/venkatesh/
-├── HotelManagementSystem.java  # Main application class with all logic
+├── entity/
+│   ├── Customer.java     
+│   └── Room.java         
+├── util/
+│   └── HibernateUtil.java 
+├── HotelManagementSystem.java 
+└── resources/
+    └── META-INF/
+        └── persistence.xml 
 ```
 
 ---
 
-# How to Run
+# How to Run 
 
-- *Clone or download this project.*
-- *Open it using VS Code, IntelliJ, or Eclipse.*
-- *Edit your DB credentials in HotelManagementSystem.java:*
-- **private static final String URL = "jdbc:postgresql://localhost:5432/hotel";*
-- *private static final String USER = "postgres";*
-- *private static final String PASSWORD = "2305";*
-- *mvn clean install*
-- *Run HotelManagementSystem.java to start the application.*
+- *Clone the repo or download the ZIP.*
+- *Open the project in VS Code, IntelliJ, or Eclipse.*
+- *Make sure PostgreSQL is running and the hotel database is created.*
+- *Update DB credentials in persistence.xml under:*
+1. *property name="jakarta.persistence.jdbc.user" value="postgres"*
+2. *property name="jakarta.persistence.jdbc.password" value="yourpassword"*
+- *Open terminal and run: mvn clean install*
+- *Run HotelManagementSystem.java*
 
 ---
 
@@ -112,12 +148,21 @@ com/venkatesh/
 - 1. Book Room
 - 2. View All Bookings
 - 3. View Room Availability Summary
-- 4. Exit
-Enter your choice:
+- 4. Exit 
+-     Enter your choice:
 
 ---
 
-# Contact
+# Input Validations 
+- Field	Validation
+- Name Cannot be empty
+- Contact	Cannot be empty
+- Room Type	Must be "AC" or "Non-AC"
+- Room Count Must be a valid integer > 0
+
+--- 
+
+# Contact 
 
 - **Developer:** Venkatesh Soma
 - **Email:** venkateshsoma2305@gmail.com
@@ -128,8 +173,8 @@ Enter your choice:
 # Screenshot :
 
 
-![hotel](hotel.png)
-
+![hotel](hotel1.png)
+![hotel](hotel2.png)
 
 
 
