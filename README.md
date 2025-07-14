@@ -174,7 +174,7 @@ com/venkatesh/
 
 
 ![hotel](hotel1.png)
-![hotel](hotel2.png)
+
 
 
 
