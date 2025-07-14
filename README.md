@@ -116,16 +116,19 @@ SELECT generate_series(51, 100), 'NON-AC';
 # Project Structure 
 
 ```bash
-com/venkatesh/
-├── entity/
-│   ├── Customer.java     
-│   └── Room.java         
-├── util/
-│   └── HibernateUtil.java 
-├── HotelManagementSystem.java 
-└── resources/
-    └── META-INF/
-        └── persistence.xml 
+src/
+└── com/
+    └── venkatesh/
+        ├── HotelManagementSystem.java
+        ├── entity/
+        │   ├── Room.java
+        │   └── Customer.java
+        ├── service/
+        │   ├── BookingService.java
+        │   └── ViewService.java
+        └── util/
+            └── HibernateUtil.java
+
 ```
 
 ---
