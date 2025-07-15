@@ -6,14 +6,13 @@
     <class>com.venkatesh.entity.Room</class>
 
     <properties>
-      <!-- PostgreSQL DB Connection -->
+ 
       <property name="jakarta.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/hotel"/>
       <property name="jakarta.persistence.jdbc.user" value="postgres"/>
       <property name="jakarta.persistence.jdbc.password" value="2305"/>
       <property name="jakarta.persistence.jdbc.driver" value="org.postgresql.Driver"/>
-
-      <!-- Hibernate Configuration -->
-      <property name="hibernate.hbm2ddl.auto" value="update"/>
+      
+      <property name="jakarta.persistence.schema-generation.database.action" value="update"/>
       <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect"/>
       <property name="hibernate.show_sql" value="false"/>
       <property name="hibernate.format_sql" value="false"/>
