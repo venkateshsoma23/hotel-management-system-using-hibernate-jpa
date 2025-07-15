@@ -24,7 +24,7 @@ The Hotel Management System is a console-based Java application built using Core
 
 ---
 
-# Maven Dependency 
+# Dependency 
 
 Add the following to your `pom.xml`:
 
@@ -73,6 +73,15 @@ Add the following to your `pom.xml`:
 </persistence>
 
 ```
+
+---
+
+# Prerequisites
+- Ensure the following are installed:
+- Java JDK 17 or 17+
+- Apache Maven 3.8.6+
+- PostgreSQL 15+
+
 
 ---
 
@@ -146,7 +155,7 @@ src/
 
 ---
 
-# Hotel Management System 
+# Hotel Management System :
 
 - 1. Book Room
 - 2. View All Bookings
